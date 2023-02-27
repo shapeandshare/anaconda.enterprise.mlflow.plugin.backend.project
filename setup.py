@@ -1,3 +1,4 @@
+import setuptools
 from setuptools import setup
 
 setup(
@@ -10,7 +11,6 @@ setup(
     install_requires=["mlflow"],
     entry_points={
         # Define a MLflow Project Backend plugin called 'dummy-backend'
-        # "mlflow.project_backend": "dummy-backend=mlflow_test_plugin.dummy_backend:PluginDummyProjectBackend",
         "mlflow.project_backend": "ae=src.anaconda.enterprise.mlflow.plugin.ae_backend:ae_backend_builder",
     },
 )
