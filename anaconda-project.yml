@@ -34,28 +34,34 @@ commands:
       black --line-length=120 --target-version=py38 .
 
   build:docs:quickstart:
-    env_spec: python38
+    env_spec: default
     unix: |
       sphinx-quickstart docs --sep --project anaconda.enterprise.mlflow.plugin.project_backend
 
   build:apidocs:
-    env_spec: python38
+    env_spec: default
     unix: |
       sphinx-apidoc -f -o docs/source/project_backend src/anaconda/enterprise/mlflow/plugin
 
   build:docs:
-    env_spec: python38
+    env_spec: default
     unix: |
       rm -rf docs/build docs/plugin && cp -rf src/anaconda/enterprise/mlflow/plugin docs && cd docs && make clean && make html
 
 channels:
     - https://conda.anaconda.org/conda-forge/
+    - https://conda.anaconda.org/joshburt/
 
 platforms:
   - linux-64
   - osx-64
   - osx-arm64
   - win-64
+
+variables:
+  AE_HOSTNAME:
+  AE_USERNAME:
+  AE_AUTH:
 
 env_specs:
     default:
@@ -70,3 +76,5 @@ env_specs:
           - jupyterlab
           - sphinx
           - sphinx-rtd-theme
+          - setuptools
+          - anaconda.enterprise.server.sdk>=0.7.1
