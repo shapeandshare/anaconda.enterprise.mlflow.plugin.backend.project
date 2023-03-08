@@ -1,0 +1,97 @@
+name: anaconda.enterprise.mlflow.plugin.project_backend
+description: MLFlow Backend Plugin For Anaconda Enterprise
+
+commands:
+  #
+  # Run Time Commands
+  #
+
+#  Worker:
+#    env_spec: default
+#    unix: python -m src.anaconda.enterprise.mlflow.plugin.worker
+
+
+  #
+  # Development Time Commands
+  #
+
+  launch_jupyter_lab:
+    env_spec: default
+    unix: jupyter lab
+
+  bash:
+    env_spec: default
+    unix: bash
+
+  clean:
+    env_spec: default
+    unix: |
+      rm -rf .coverage htmlcov coverage.xml build docs/build
+      jupyter nbconvert --clear-output --inplace notebooks/**/*.ipynb
+
+  lint:
+    env_spec: default
+    unix: |
+      pylint src
+      isort --check --diff .
+      black --line-length=120 --target-version=py38 --check --diff .
+
+  lint:fix:
+    env_spec: default
+    unix: |
+      isort .
+      black --line-length=120 --target-version=py38 .
+
+  build:docs:quickstart:
+    env_spec: default
+    unix: |
+      sphinx-quickstart docs --sep --project anaconda.enterprise.mlflow.plugin.project_backend
+
+  build:apidocs:
+    env_spec: default
+    unix: |
+      sphinx-apidoc -f -o docs/source/project_backend src/anaconda/enterprise/mlflow/plugin
+
+  build:docs:
+    env_spec: default
+    unix: |
+      rm -rf docs/build docs/plugin && cp -rf src/anaconda/enterprise/mlflow/plugin docs && cd docs && make clean && make html
+
+channels:
+    - https://conda.anaconda.org/conda-forge/
+    - https://conda.anaconda.org/joshburt/
+    - https://conda.anaconda.org/ae5-admin
+
+platforms:
+  - linux-64
+  - osx-64
+  - osx-arm64
+  - win-64
+
+variables:
+  # Used for job control
+#  AE5_HOSTNAME:
+#  AE5_USERNAME:
+#  AE5_PASSWORD:
+
+# For micro-service based approach
+#  AE_MLFLOW_RUNNER_URL:
+#  AE_MLFLOW_RUNNER_BEARER_TOKEN:
+
+env_specs:
+    default:
+        description: Default Environment
+        packages:
+          - python=3.8.16
+          - mlflow=2.0.1
+          - ae5-tools
+          - anaconda.enterprise.server.contracts>=0.9.3
+          - anaconda.enterprise.server.common.sdk
+#          - isort
+#          - pylint
+#          - black
+#          - jupyter-black
+#          - jupyterlab
+#          - sphinx
+#          - sphinx-rtd-theme
+#          - setuptools
