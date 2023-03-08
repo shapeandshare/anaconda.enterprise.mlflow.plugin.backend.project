@@ -161,4 +161,5 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
 
     @staticmethod
     def get_project_id() -> str:
+        # When executing within a session this seems to be the most reliable method for getting a context id.
         return f"a0-{demand_env_var(name='TOOL_PROJECT_URL').split(sep='/')[4]}"
