@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name="anaconda.enterprise.mlflow.plugin.backend.project",
     version="0.2.0",
-    description=" MLFlow Backend Plugin For Anaconda Enterprise Projects",
+    description="MLFlow Backend Plugin For Anaconda Enterprise Projects",
     package_dir={"": "src"},
     packages=setuptools.find_namespace_packages(where="src"),
     author="Joshua C. Burt",
