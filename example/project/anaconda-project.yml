@@ -1,0 +1,54 @@
+name: TrainingTester
+
+commands:
+  #
+  # Run Time Commands
+  #
+
+  Worker:
+    env_spec: default
+    unix: python -m anaconda.enterprise.mlflow.plugin.backend.services.worker
+
+  #
+  # Development Time Commands
+  #
+
+  bash:
+    env_spec: default
+    unix: bash
+
+variables:
+  MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
+  
+  AE5_HOSTNAME:
+  AE5_USERNAME:
+  AE5_PASSWORD:
+  
+  # MLFLow Setup   
+  MLFLOW_TRACKING_URI:
+  MLFLOW_REGISTRY_URI:
+  MLFLOW_TRACKING_TOKEN:
+
+channels:
+    - https://conda.anaconda.org/conda-forge
+    - https://conda.anaconda.org/joshburt
+    - https://conda.anaconda.org/ae5-admin
+
+platforms:
+  - linux-64
+
+env_specs:
+    default:
+        description: Default Environment
+        packages:
+        - python=3.8.15
+        - ipykernel
+        - mlflow=2.0.1
+        - make
+        - virtualenv
+        - pip
+        - anaconda.enterprise.server.common.sdk>=0.3
+        - ae5-tools
+        - click
+        - anaconda.enterprise.server.contracts>=0.9.3
+        - anaconda.enterprise.mlflow.plugin.backend>=0.1.2

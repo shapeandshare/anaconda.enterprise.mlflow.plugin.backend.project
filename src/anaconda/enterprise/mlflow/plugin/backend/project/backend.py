@@ -1,3 +1,5 @@
+""" MLFlow Backend Plugin For Anaconda Enterprise Definition """
+
 import logging
 from typing import Dict, Optional, Union
 
@@ -10,17 +12,35 @@ from mlflow.projects.utils import PROJECT_STORAGE_DIR, fetch_and_validate_projec
 from anaconda.enterprise.server.common.sdk import demand_env_var
 from anaconda.enterprise.server.contracts import BaseModel
 
-from .ae_submitted_run import AnacondaEnterpriseSubmittedRun
+from .submitted_run import AnacondaEnterpriseSubmittedRun
 from .utils import create_session
 
 logger = logging.getLogger(__name__)
 
 
 def ae_backend_builder() -> AbstractBackend:
+    """
+    This function will act as our handler for setting up the plugin.
+
+    This function is responsible for:
+    1. Creating an Anaconda Enterprise Session and Connecting.
+    2. Instantiating an AnacondaEnterpriseProjectBackend with the created session.
+
+    Returns
+    -------
+    backend: AnacondaEnterpriseProjectBackend
+        An instance of the plugin.
+    """
+
     return AnacondaEnterpriseProjectBackend(ae_session=create_session())
 
 
 class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
+    """
+    Anaconda Enterprise Project Backend
+    Sub-classes the MLFlow `AbstractBackend` used for backend management.
+    """
+
     ae_session: AEUserSession
 
     def run(
@@ -33,6 +53,34 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
         tracking_uri: str,
         experiment_id: str,
     ):
+        """
+        The entry point for the execution.  Invoked by mlflow.projects.run when the backend is specified.
+        See https://mlflow.org/docs/2.0.1/python_api/mlflow.projects.html#mlflow.projects.run for in-depth details on these parameters.
+
+        Parameters
+        ----------
+        project_uri: str
+            URI of project to run.
+        entry_point: str
+            Entry point to run within the project.
+        params: Dict
+            Parameters (dictionary) for the entry point command.
+        version: str
+            For Git-based projects, either a commit hash or a branch name.
+        backend_config: Dict
+            A dictionary, or a path to a JSON file (must end in ‘.json’), which will be passed as config to the backend.
+        tracking_uri: str
+            The Tracking Server URI.  Within our backend this is controlled through environment variables.
+            While passed by the caller it is ignored in this implementation.
+        experiment_id: str
+            The experiment ID for the current execution context.
+
+        Returns
+        -------
+        submitted_job: AnacondaEnterpriseSubmittedRun
+            An instance of an `AnacondaEnterpriseSubmittedRun` used for tracking and managing the backend run.
+        """
+
         logger.info("Using Anaconda Enterprise Backend")
         # logger.info(locals())
 
@@ -68,7 +116,7 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
         )
 
         # Submit the job to Anaconda Enterprise
-        job_create_response: Dict = self.submit_job(
+        job_create_response: Dict = self._submit_job(
             mlflow_run_id=active_run.info.run_id,
             variables={**env_vars, "TRAINING_ENTRY_POINT": entry_point_command},
             resource_profile=resource_profile,
@@ -81,12 +129,30 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
             response=job_create_response,
         )
 
-    def submit_job(
+    def _submit_job(
         self, mlflow_run_id: str, resource_profile: Optional[str] = None, variables: Optional[Dict] = None
     ) -> Dict:
+        """
+        This method handles the submission of the Anaconda Enterprise `run-once` job on the current project.
+
+        Parameters
+        ----------
+        mlflow_run_id: str
+            The MLFlow Run ID
+        resource_profile: Optional[str]
+            The resource profile to use for the job run.
+        variables: Optional[Dict]
+            Job variables to provide to the job during invocation.
+
+        Returns
+        -------
+        job_create_result: Dict
+            A dictionary response for the job creation request.
+        """
+
         # Create a run-now job
         job_create_result: Dict = self.ae_session.job_create(
-            ident=AnacondaEnterpriseProjectBackend.get_project_id(),
+            ident=AnacondaEnterpriseProjectBackend._get_project_id(),
             name=mlflow_run_id,
             command="Worker",
             resource_profile=resource_profile,
@@ -97,6 +163,18 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
         return job_create_result
 
     @staticmethod
-    def get_project_id() -> str:
+    def _get_project_id() -> str:
+        """
+        Inspected the run-time environment for the project Id.
+
+        This implementation works when running within a project session in Anaconda Enterprise.
+        We may need to make this more robust to handle execution within jobs as well if different.
+
+        Returns
+        -------
+        project_id: str
+            The project ID for the Anaconda Enterprise project which owns the runtime context.
+        """
+
         # When executing within a session this seems to be the most reliable method for getting a context id.
         return f"a0-{demand_env_var(name='TOOL_PROJECT_URL').split(sep='/')[4]}"

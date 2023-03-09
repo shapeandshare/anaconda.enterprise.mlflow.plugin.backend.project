@@ -1,33 +1,15 @@
-name: anaconda.enterprise.mlflow.plugin.project_backend
+name: anaconda.enterprise.mlflow.plugin.backend
 description: MLFlow Backend Plugin For Anaconda Enterprise
 
 commands:
   #
-  # Run Time Commands
-  #
-
-#  Worker:
-#    env_spec: default
-#    unix: python -m src.anaconda.enterprise.mlflow.plugin.worker
-
-
-  #
   # Development Time Commands
   #
-
-  launch_jupyter_lab:
-    env_spec: default
-    unix: jupyter lab
-
-  bash:
-    env_spec: default
-    unix: bash
 
   clean:
     env_spec: default
     unix: |
       rm -rf .coverage htmlcov coverage.xml build docs/build
-      jupyter nbconvert --clear-output --inplace notebooks/**/*.ipynb
 
   lint:
     env_spec: default
@@ -68,16 +50,6 @@ platforms:
   - osx-arm64
   - win-64
 
-variables:
-  # Used for job control
-#  AE5_HOSTNAME:
-#  AE5_USERNAME:
-#  AE5_PASSWORD:
-
-# For micro-service based approach
-#  AE_MLFLOW_RUNNER_URL:
-#  AE_MLFLOW_RUNNER_BEARER_TOKEN:
-
 env_specs:
     default:
         description: Default Environment
@@ -87,11 +59,9 @@ env_specs:
           - ae5-tools
           - anaconda.enterprise.server.contracts>=0.9.3
           - anaconda.enterprise.server.common.sdk
-#          - isort
-#          - pylint
-#          - black
-#          - jupyter-black
-#          - jupyterlab
-#          - sphinx
-#          - sphinx-rtd-theme
-#          - setuptools
+          - isort
+          - pylint
+          - black
+          - jupyter-black
+          - sphinx
+          - sphinx-rtd-theme

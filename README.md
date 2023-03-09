@@ -1,5 +1,5 @@
-# anaconda.enterprise.mlflow.plugin.project_backend
-anaconda.enterprise.mlflow.plugin.project_backend
+# anaconda.enterprise.mlflow.plugin.backend.project
+anaconda.enterprise.mlflow.plugin.backend.project
 
 
 ## References
