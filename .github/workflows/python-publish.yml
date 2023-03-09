@@ -50,4 +50,4 @@ jobs:
       env:
         ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
       run: |
-        anaconda --verbose --token $ANACONDA_TOKEN upload --user joshburt build/noarch/anaconda.enterprise.mlflow.plugin.project_backend-*.tar.bz2 --force
+        anaconda --verbose --token $ANACONDA_TOKEN upload --user joshburt build/noarch/anaconda.enterprise.mlflow.plugin.backend-*.tar.bz2 --force
