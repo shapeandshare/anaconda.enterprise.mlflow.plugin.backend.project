@@ -1,5 +1,5 @@
 name: anaconda.enterprise.mlflow.plugin.backend
-description: MLFlow Backend Plugin For Anaconda Enterprise
+description: MLFlow Backend Plugin For Anaconda Enterprise Projects
 
 commands:
   #
@@ -32,12 +32,16 @@ commands:
   build:apidocs:
     env_spec: default
     unix: |
-      sphinx-apidoc -f -o docs/source/backend src/anaconda/enterprise/mlflow/plugin/backend/project
+      rm -rf docs/source/project
+      cp -rf src/anaconda/enterprise/mlflow/plugin/backend/project docs/source/project
+      sphinx-apidoc -f -o docs/source/api docs/source/project
 
   build:docs:
     env_spec: default
     unix: |
-      rm -rf docs/build docs/source/backend && cp -rf src/anaconda/enterprise/mlflow/plugin/backend docs/source/backend && cd docs && make clean && make html
+      rm -rf docs/build docs/source/project
+      cp -rf src/anaconda/enterprise/mlflow/plugin/backend/project docs/source/project
+      cd docs && make clean && make html
 
 channels:
     - https://conda.anaconda.org/conda-forge
@@ -65,3 +69,4 @@ env_specs:
           - jupyter-black
           - sphinx
           - sphinx-rtd-theme
+          - myst-parser

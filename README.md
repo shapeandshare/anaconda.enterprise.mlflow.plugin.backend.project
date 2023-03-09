@@ -20,7 +20,7 @@ See `Variables` below for specific details on each.
 2. Install the plugin:
 > conda install anaconda.enterprise.mlflow.plugin.backend.project -c https://conda.anaconda.org/joshburt
 
-2. Add the Anaconda Project Worker Command:
+3. Add the Anaconda Project Worker Command:
 
 
     Worker: 
@@ -51,7 +51,7 @@ If the below variables are defined within an Anaconda Project and as secrets wit
     * The username of the account to create the jobs with.  This should be an account who owns the project or is a collaborator on the project.
 
 
-4. `AE5_PASSWORD`
+3. `AE5_PASSWORD`
 
     **Description**
 
