@@ -4,6 +4,8 @@ import os
 
 from ae5_tools.api import AEUserSession
 
+from anaconda.enterprise.server.common.sdk import load_ae5_user_secrets
+
 
 def create_session() -> AEUserSession:
     """
@@ -15,6 +17,9 @@ def create_session() -> AEUserSession:
     session: AEUserSession
         An instance of an Anaconda Enterprise user session.
     """
+
+    # Load defined environmental variables
+    load_ae5_user_secrets(silent=False)
 
     # Create the session directly and provide the AE5 config and credentials:
     ae_session: AEUserSession = AEUserSession(

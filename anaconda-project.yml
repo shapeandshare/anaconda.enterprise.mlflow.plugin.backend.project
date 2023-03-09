@@ -27,17 +27,17 @@ commands:
   build:docs:quickstart:
     env_spec: default
     unix: |
-      sphinx-quickstart docs --sep --project anaconda.enterprise.mlflow.plugin.project_backend
+      sphinx-quickstart docs --sep --project anaconda.enterprise.mlflow.plugin.backend.project
 
   build:apidocs:
     env_spec: default
     unix: |
-      sphinx-apidoc -f -o docs/source/project_backend src/anaconda/enterprise/mlflow/plugin
+      sphinx-apidoc -f -o docs/source/backend src/anaconda/enterprise/mlflow/plugin/backend/project
 
   build:docs:
     env_spec: default
     unix: |
-      rm -rf docs/build docs/plugin && cp -rf src/anaconda/enterprise/mlflow/plugin docs && cd docs && make clean && make html
+      rm -rf docs/build docs/source/backend && cp -rf src/anaconda/enterprise/mlflow/plugin/backend docs/source/backend && cd docs && make clean && make html
 
 channels:
     - https://conda.anaconda.org/conda-forge
@@ -54,7 +54,7 @@ env_specs:
     default:
         description: Default Environment
         packages:
-          - python=3.8.16
+          - python>=3.8
           - mlflow=2.0.1
           - ae5-tools
           - anaconda.enterprise.server.contracts>=0.9.3
