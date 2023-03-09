@@ -24,16 +24,16 @@ class WorkerService:
                 print(line)
 
     @staticmethod
-    # def execute(project_path: str, request: Dict):
     def execute():
         print("Processing mlflow step")
-        training_entry_point = os.environ["TRAINING_ENTRY_POINT"]
+        training_entry_point: str = os.environ["TRAINING_ENTRY_POINT"]
         print(training_entry_point)
-
         WorkerService._process_launch_wait(cwd=".", shell_out_cmd=training_entry_point)
         print("Complete")
 
         # TODO? Post logs to mlflow for run?
+        # This issue here is that I don't know my context id for reporting.
+        # Further investigation is needed.
 
 
 if __name__ == "__main__":
