@@ -2,8 +2,8 @@ import setuptools
 from setuptools import setup
 
 setup(
-    name="anaconda.enterprise.mlflow.plugin.project_backend",
-    version="0.1.0",
+    name="anaconda.enterprise.mlflow.plugin.backend",
+    version="0.1.1",
     description=" MLFlow Backend Plugin For Anaconda Enterprise",
     package_dir={"": "src"},
     packages=setuptools.find_namespace_packages(where="src"),

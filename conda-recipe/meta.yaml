@@ -1,5 +1,5 @@
-{% set name = "anaconda.enterprise.mlflow.plugin.project_backend" %}
-{% set version = "0.1.0" %}
+{% set name = "anaconda.enterprise.mlflow.plugin.backend" %}
+{% set version = "0.1.1" %}
 
 package:
   name: "{{ name|lower }}"
@@ -26,7 +26,7 @@ requirements:
     - anaconda.enterprise.server.common.sdk
 
 about:
-  home: https://github.com/shapeandshare/anaconda.enterprise.mlflow.plugin.project_backend
+  home: https://github.com/shapeandshare/anaconda.enterprise.mlflow.plugin.backend
   summary: "MLFlow Backend Plugin For Anaconda Enterprise"
   license: BSD
   license_file: LICENSE
