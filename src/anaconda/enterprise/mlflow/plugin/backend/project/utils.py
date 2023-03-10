@@ -1,10 +1,8 @@
 """ Authentication / Authorization Helper Functions """
 
-import os
-
 from ae5_tools.api import AEUserSession
 
-from anaconda.enterprise.server.common.sdk import load_ae5_user_secrets
+from anaconda.enterprise.server.common.sdk import demand_env_var, load_ae5_user_secrets
 
 
 def create_session() -> AEUserSession:
@@ -23,7 +21,9 @@ def create_session() -> AEUserSession:
 
     # Create the session directly and provide the AE5 config and credentials:
     ae_session: AEUserSession = AEUserSession(
-        hostname=os.environ["AE5_HOSTNAME"], username=os.environ["AE5_USERNAME"], password=os.environ["AE5_PASSWORD"]
+        hostname=demand_env_var(name="AE5_HOSTNAME"),
+        username=demand_env_var(name="AE5_USERNAME"),
+        password=demand_env_var(name="AE5_PASSWORD"),
     )
 
     # Connect to Anaconda Enterprise

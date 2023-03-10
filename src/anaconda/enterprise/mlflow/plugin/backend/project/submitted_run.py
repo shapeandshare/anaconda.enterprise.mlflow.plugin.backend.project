@@ -10,6 +10,8 @@ from mlflow.projects.submitted_run import SubmittedRun
 
 from anaconda.enterprise.server.contracts import BaseModel
 
+from .contacts.types.job_run_state import AEProjectJobRunState
+
 logger = logging.getLogger(__name__)
 
 
@@ -67,8 +69,8 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
         if len(runs_status) != 1:
             raise Exception("Unable to determine which run to analyze")
 
-        job_status: str = runs_status[0]["state"]
-        if job_status == "completed":
+        run_state: str = runs_status[0]["state"]
+        if run_state == AEProjectJobRunState.COMPLETED:
             return True
         return False
 
@@ -85,8 +87,8 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
             if len(runs_status) != 1:
                 raise Exception("Unable to determine which job to analyze")
 
-            job_status: str = runs_status[0]["state"]
-            if job_status in ["failed", "stopped", "completed"]:
+            run_state: str = runs_status[0]["state"]
+            if run_state in [AEProjectJobRunState.FAILED, AEProjectJobRunState.STOPPED, AEProjectJobRunState.COMPLETED]:
                 completed = True
 
     def get_status(self) -> RunStatus:
@@ -104,21 +106,21 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
         if len(runs_status) != 1:
             raise Exception("Unable to determine which run to analyze")
 
-        job_status: str = runs_status[0]["state"]
+        run_state: str = runs_status[0]["state"]
 
-        if job_status == "running":
+        if run_state == AEProjectJobRunState.RUNNING:
             return RunStatus.RUNNING
 
-        if job_status == "failed":
+        if run_state == AEProjectJobRunState.FAILED:
             return RunStatus.FAILED
 
-        if job_status == "stopped":
+        if run_state == AEProjectJobRunState.STOPPED:
             return RunStatus.KILLED
 
-        if job_status == "completed":
+        if run_state == AEProjectJobRunState.COMPLETED:
             return RunStatus.FINISHED
 
-        message: str = f"Unknown job state seen: ({job_status})"
+        message: str = f"Unknown job state seen: ({run_state})"
         raise Exception(message)
 
     def cancel(self) -> None:
