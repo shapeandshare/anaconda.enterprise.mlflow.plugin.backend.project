@@ -14,10 +14,10 @@ sys.path.insert(0, os.path.abspath("../../backend"))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'MLFlow Backend Plugin For Anaconda Enterprise Projects'
+project = "MLFlow Backend Plugin For Anaconda Enterprise Projects"
 copyright = "2023, Anaconda, Inc"
-author = 'Joshua C. Burt'
-release = '0.3.0'
+author = "Joshua C. Burt"
+release = "0.4.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,13 +26,12 @@ extensions = [
     "myst_parser",
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
-
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
