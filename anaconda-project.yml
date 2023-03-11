@@ -59,10 +59,13 @@ env_specs:
         description: Default Environment
         packages:
           - python>=3.8
+
           - mlflow=2.0.1
           - ae5-tools
           - anaconda.enterprise.server.contracts>=0.9.3
           - anaconda.enterprise.server.common.sdk
+
+          # Project Maintenance and Development
           - isort
           - pylint
           - black

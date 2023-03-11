@@ -10,7 +10,8 @@ from mlflow.projects.submitted_run import SubmittedRun
 
 from anaconda.enterprise.server.contracts import BaseModel
 
-from .contacts.types.job_run_state import AEProjectJobRunState
+from .contacts.errors.plugin import AEMLFlowPluginError
+from .contacts.types.job_run_state import AEProjectJobRunStateType
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +50,7 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
 
         runs_status: List[Dict] = self.ae_session.job_runs(ident=self.ae_job_id, format="json")
         if len(runs_status) != 1:
-            raise Exception("Unable to determine which run to analyze")
+            raise AEMLFlowPluginError("Unable to determine which run to analyze")
         run_id: str = runs_status[0]["id"]
         return self.ae_session.run_log(ident=run_id)
 
@@ -67,10 +68,10 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
 
         runs_status: List[Dict] = self.ae_session.job_runs(ident=self.ae_job_id, format="json")
         if len(runs_status) != 1:
-            raise Exception("Unable to determine which run to analyze")
+            raise AEMLFlowPluginError("Unable to determine which run to analyze")
 
         run_state: str = runs_status[0]["state"]
-        if run_state == AEProjectJobRunState.COMPLETED:
+        if run_state == AEProjectJobRunStateType.COMPLETED:
             return True
         return False
 
@@ -85,10 +86,14 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
 
             runs_status: List[Dict] = self.ae_session.job_runs(ident=self.ae_job_id, format="json")
             if len(runs_status) != 1:
-                raise Exception("Unable to determine which job to analyze")
+                raise AEMLFlowPluginError("Unable to determine which job to analyze")
 
             run_state: str = runs_status[0]["state"]
-            if run_state in [AEProjectJobRunState.FAILED, AEProjectJobRunState.STOPPED, AEProjectJobRunState.COMPLETED]:
+            if run_state in [
+                AEProjectJobRunStateType.FAILED,
+                AEProjectJobRunStateType.STOPPED,
+                AEProjectJobRunStateType.COMPLETED,
+            ]:
                 completed = True
 
     def get_status(self) -> RunStatus:
@@ -104,24 +109,24 @@ class AnacondaEnterpriseSubmittedRun(SubmittedRun, BaseModel):
         runs_status: List[Dict] = self.ae_session.job_runs(ident=self.ae_job_id, format="json")
 
         if len(runs_status) != 1:
-            raise Exception("Unable to determine which run to analyze")
+            raise AEMLFlowPluginError("Unable to determine which run to analyze")
 
         run_state: str = runs_status[0]["state"]
 
-        if run_state == AEProjectJobRunState.RUNNING:
+        if run_state == AEProjectJobRunStateType.RUNNING:
             return RunStatus.RUNNING
 
-        if run_state == AEProjectJobRunState.FAILED:
+        if run_state == AEProjectJobRunStateType.FAILED:
             return RunStatus.FAILED
 
-        if run_state == AEProjectJobRunState.STOPPED:
+        if run_state == AEProjectJobRunStateType.STOPPED:
             return RunStatus.KILLED
 
-        if run_state == AEProjectJobRunState.COMPLETED:
+        if run_state == AEProjectJobRunStateType.COMPLETED:
             return RunStatus.FINISHED
 
         message: str = f"Unknown job state seen: ({run_state})"
-        raise Exception(message)
+        raise AEMLFlowPluginError(message)
 
     def cancel(self) -> None:
         """Cancels a run's execution"""

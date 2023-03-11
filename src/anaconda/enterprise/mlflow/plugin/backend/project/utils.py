@@ -17,7 +17,7 @@ def create_session() -> AEUserSession:
     """
 
     # Load defined environmental variables
-    load_ae5_user_secrets(silent=False)
+    load_ae5_user_secrets()
 
     # Create the session directly and provide the AE5 config and credentials:
     ae_session: AEUserSession = AEUserSession(
@@ -27,5 +27,7 @@ def create_session() -> AEUserSession:
     )
 
     # Connect to Anaconda Enterprise
+    # This is currently accomplished this by accessing a private method.
+    # pylint: disable=protected-access
     ae_session._connect(password=ae_session)
     return ae_session

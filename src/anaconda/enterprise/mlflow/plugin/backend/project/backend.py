@@ -43,6 +43,9 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
 
     ae_session: AEUserSession
 
+    # Note: this function's signature is defined by the super-class and is expected
+    # to be able to receive these arguments, we can not adjust this here.
+    # pylint: disable=too-many-arguments
     def run(
         self,
         project_uri: str,
@@ -55,7 +58,8 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
     ):
         """
         The entry point for the execution.  Invoked by mlflow.projects.run when the backend is specified.
-        See https://mlflow.org/docs/2.0.1/python_api/mlflow.projects.html#mlflow.projects.run for in-depth details on these parameters.
+        See https://mlflow.org/docs/2.0.1/python_api/mlflow.projects.html#mlflow.projects.run for
+        in-depth details on these parameters.
 
         Parameters
         ----------
@@ -81,8 +85,7 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
             An instance of an `AnacondaEnterpriseSubmittedRun` used for tracking and managing the backend run.
         """
 
-        logger.info("Using Anaconda Enterprise Backend")
-        # logger.info(locals())
+        logger.debug("Using Anaconda Enterprise Backend")
 
         work_dir: Union[bytes, str] = fetch_and_validate_project(project_uri, version, entry_point, params)
         active_run: Run = get_or_create_run(
@@ -95,19 +98,17 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
             parameters=params,
         )
 
-        logger.info(f"run_id={active_run.info.run_id}")
-        logger.info(f"work_dir={work_dir}")
+        logger.debug(active_run.info.run_id)
+        logger.debug(work_dir)
 
-        project: Project = load_project(work_dir)
-
-        storage_dir: Dict = backend_config[PROJECT_STORAGE_DIR]
-        entry_point_command: str = project.get_entry_point(entry_point).compute_command(params, storage_dir)
-        logger.info(f"entry_point_command={entry_point_command}")
-
-        # MLFlow Session Variables Needed For Reporting
+        # MLFlow Session Variables
+        entry_point_cmd: str = self._get_entry_point_command(
+            work_dir=work_dir, backend_config=backend_config, entry_point=entry_point, params=params
+        )
         env_vars: Dict = {
             "MLFLOW_RUN_ID": active_run.info.run_id,
             "MLFLOW_EXPERIMENT_ID": experiment_id,
+            "TRAINING_ENTRY_POINT": entry_point_cmd,
         }
 
         # Resource profiles can be defined within backend_config.json
@@ -118,7 +119,7 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
         # Submit the job to Anaconda Enterprise
         job_create_response: Dict = self._submit_job(
             mlflow_run_id=active_run.info.run_id,
-            variables={**env_vars, "TRAINING_ENTRY_POINT": entry_point_command},
+            variables=env_vars,
             resource_profile=resource_profile,
         )
 
@@ -128,6 +129,14 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
             ae_job_id=job_create_response["id"],
             response=job_create_response,
         )
+
+    @staticmethod
+    def _get_entry_point_command(work_dir: str, backend_config: Dict, entry_point: str, params: Dict) -> str:
+        project: Project = load_project(work_dir)
+        storage_dir: Dict = backend_config[PROJECT_STORAGE_DIR]
+        entry_point_command: str = project.get_entry_point(entry_point).compute_command(params, storage_dir)
+        logger.debug(entry_point_command)
+        return entry_point_command
 
     def _submit_job(
         self, mlflow_run_id: str, resource_profile: Optional[str] = None, variables: Optional[Dict] = None
