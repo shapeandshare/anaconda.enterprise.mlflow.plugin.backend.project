@@ -50,6 +50,9 @@ jobs:
     - name: Linting
       run: |
         anaconda-project run lint
+    - name: Unit Tests
+      run: |
+        anaconda-project run test:unit
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:
