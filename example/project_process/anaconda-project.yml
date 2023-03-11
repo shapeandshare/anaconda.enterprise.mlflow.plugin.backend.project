@@ -11,15 +11,16 @@ commands:
 
 variables:
   MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
-  
-  AE5_HOSTNAME:
-  AE5_USERNAME:
-  AE5_PASSWORD:
-  
-  # MLFLow Setup   
-  MLFLOW_TRACKING_URI:
-  MLFLOW_REGISTRY_URI:
-  MLFLOW_TRACKING_TOKEN:
+
+  # If these are not defined as AE User secrets they must be set here
+  # AE5_HOSTNAME:
+  # AE5_USERNAME:
+  # AE5_PASSWORD:
+
+  # If invoking mlflow from the command line, then these must be set:
+  # MLFLOW_TRACKING_URI:
+  # MLFLOW_REGISTRY_URI:
+  # MLFLOW_TRACKING_TOKEN:
 
 channels:
     - https://conda.anaconda.org/conda-forge

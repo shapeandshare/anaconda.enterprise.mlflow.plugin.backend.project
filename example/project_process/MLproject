@@ -1,7 +1,5 @@
 name: TrainingTester
 
-conda_env: conda.yml
-
 entry_points:
   process_one:
     parameters:
@@ -18,7 +16,5 @@ entry_points:
                                     --momentum {momentum}"
 
 
-#  main:
-#    parameters:
-#      training_data: {type: string, default: "http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"}
-#    command: "python search_random.py {training_data}"
+  main:
+    command: "python start.py"

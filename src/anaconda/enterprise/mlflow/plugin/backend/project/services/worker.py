@@ -1,8 +1,9 @@
 """ Worker Service Definition """
 
-import os
 import shlex
 import subprocess
+
+from anaconda.enterprise.server.common.sdk import demand_env_var
 
 
 class WorkerService:
@@ -36,17 +37,17 @@ class WorkerService:
         """
 
         print("Processing mlflow step")
-        training_entry_point: str = os.environ["TRAINING_ENTRY_POINT"]
+        training_entry_point: str = demand_env_var(name="TRAINING_ENTRY_POINT")
         print(training_entry_point)
         WorkerService._process_launch_wait(cwd=".", shell_out_cmd=training_entry_point)
         print("Complete")
 
+        # pylint: disable=fixme
         # TODO: Post logs to mlflow for run?
         # This issue here is that I don't know my context id for reporting.
         # Further investigation is needed.
 
 
 if __name__ == "__main__":
-    """Entry point for instantation when executed by anaconda-project."""
-
+    # Entry point for instantation when executed by anaconda-project.
     WorkerService.execute()

@@ -1,0 +1,54 @@
+name: ProjectTemplate
+
+commands:
+  #
+  # Run Time Commands
+  #
+
+  Worker:
+    env_spec: default
+    unix: python -m anaconda.enterprise.mlflow.plugin.backend.services.worker
+
+variables:
+  MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
+
+  # If these are NOT defined as AE User Secrets they MUST be set here.
+  # AE5_HOSTNAME:
+  # AE5_USERNAME:
+  # AE5_PASSWORD:
+
+  # If invoking MLFlow from the command line, then these MUST be set:
+  # MLFLOW_TRACKING_URI:
+  # MLFLOW_REGISTRY_URI:
+  # MLFLOW_TRACKING_TOKEN:
+
+channels:
+    - https://conda.anaconda.org/conda-forge
+    - https://conda.anaconda.org/joshburt
+    - https://conda.anaconda.org/ae5-admin
+
+platforms:
+  - linux-64
+
+env_specs:
+    default:
+        description: Default Environment
+        packages:
+          # Language Level
+          - python>=3.8
+
+          # MLFlow
+          - mlflow=2.0.1
+          - make
+          - virtualenv
+          - pip
+          - click
+
+          # AE5
+          - ipykernel
+          - ae5-tools
+          - anaconda.enterprise.server.common.sdk
+          - anaconda.enterprise.server.contracts
+
+          # AE5 [MLFlow]
+          - anaconda.enterprise.mlflow.plugin.backend.project

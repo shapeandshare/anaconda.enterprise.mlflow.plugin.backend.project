@@ -1,0 +1,86 @@
+name: hyperparam
+description: https://github.com/mlflow/mlflow/tree/master/examples/hyperparam
+
+commands:
+
+  #
+  # Run Time Commands
+  #
+
+  Worker:
+    env_spec: default
+    unix: |
+        python -m anaconda.enterprise.mlflow.plugin.backend.project.services.worker
+
+  #
+  # Development Time Commands 
+  #
+
+  bash:
+    env_spec: default
+    unix: bash
+
+  clean:
+    env_spec: default
+    unix: |
+      rm -rf .coverage htmlcov coverage.xml build docs/build
+      jupyter nbconvert --clear-output --inplace notebooks/**/*.ipynb
+
+  lint:
+    env_spec: default
+    unix: |
+      pylint src
+      isort --check --diff .
+      black --line-length=120 --target-version=py310 --check --diff .
+
+  lint:fix:
+    env_spec: default
+    unix: |
+      isort .
+      black --line-length=120 --target-version=py310 .
+
+variables:
+    MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
+     
+    # IF invoking mlflow from the command line, then these must be set:
+    # MLFLOW_TRACKING_URI:
+    # MLFLOW_REGISTRY_URI:
+    # MLFLOW_TRACKING_TOKEN:
+
+channels:
+    - https://conda.anaconda.org/conda-forge
+    - https://conda.anaconda.org/joshburt
+    - https://conda.anaconda.org/ae5-admin
+
+platforms:
+  - linux-64
+
+env_specs:
+    default:
+        description: Default Environment
+        packages:
+        - python=3.8.15
+
+        # AE5 + MLFlow
+        - ipykernel
+        - anaconda.enterprise.server.common.sdk
+        - ae5-tools
+        - anaconda.enterprise.server.contracts
+
+        # MLFlow
+        - mlflow=2.0.1
+        - make
+        - virtualenv
+        - pip
+        - click
+        - anaconda.enterprise.mlflow.plugin.backend.project=0.4.0
+
+        # Project Specific Requirements
+        - tensorflow=2.11.0
+        - numpy
+        - pandas
+        - scipy
+        - scikit-learn
+        - matplotlib
+        - hyperopt
+        - protobuf

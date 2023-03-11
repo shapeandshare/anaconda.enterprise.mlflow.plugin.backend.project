@@ -9,7 +9,8 @@ MLFlow Backend Plugin For Anaconda Enterprise Projects
 .. toctree::
    :maxdepth: 2
 
-   api/project
+   installation_guide
+   usage_and_configuration
 
 
 
