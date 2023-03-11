@@ -10,7 +10,7 @@ commands:
   Worker:
     env_spec: default
     unix: |
-        python -m anaconda.enterprise.mlflow.plugin.backend.project.services.worker
+        python -m anaconda.enterprise.mlflow.plugin.backend.services.worker
 
   #
   # Development Time Commands 
@@ -40,12 +40,17 @@ commands:
       black --line-length=120 --target-version=py310 .
 
 variables:
-    MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
+  MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
      
-    # IF invoking mlflow from the command line, then these must be set:
-    # MLFLOW_TRACKING_URI:
-    # MLFLOW_REGISTRY_URI:
-    # MLFLOW_TRACKING_TOKEN:
+  # If these are not defined as AE User secrets they must be set here
+  # AE5_HOSTNAME:
+  # AE5_USERNAME:
+  # AE5_PASSWORD:
+
+  # If invoking mlflow from the command line, then these must be set:
+  # MLFLOW_TRACKING_URI:
+  # MLFLOW_REGISTRY_URI:
+  # MLFLOW_TRACKING_TOKEN:
 
 channels:
     - https://conda.anaconda.org/conda-forge
@@ -66,6 +71,7 @@ env_specs:
         - anaconda.enterprise.server.common.sdk
         - ae5-tools
         - anaconda.enterprise.server.contracts
+        - mlflow-adsp
 
         # MLFlow
         - mlflow=2.0.1
@@ -73,7 +79,6 @@ env_specs:
         - virtualenv
         - pip
         - click
-        - anaconda.enterprise.mlflow.plugin.backend.project=0.4.0
 
         # Project Specific Requirements
         - tensorflow=2.11.0

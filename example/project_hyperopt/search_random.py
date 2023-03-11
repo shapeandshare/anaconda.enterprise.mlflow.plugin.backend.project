@@ -49,7 +49,7 @@ def run(training_data, max_runs, max_p, epochs, metric, seed):
                     uri=".",
                     entry_point="train",
                     env_manager="local",
-                    backend="ae-project",
+                    backend="adsp",
                     parameters={
                         "training_data": training_data,
                         "epochs": str(nepochs),

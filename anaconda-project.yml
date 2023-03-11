@@ -1,5 +1,5 @@
-name: anaconda.enterprise.mlflow.plugin.backend.project
-description: MLFlow Backend Plugin For Anaconda Enterprise Projects
+name: mlflow-asdp
+description: MLFlow Plugin For Anaconda Enterprise
 
 commands:
   #

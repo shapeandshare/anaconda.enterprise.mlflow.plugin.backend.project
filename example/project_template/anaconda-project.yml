@@ -51,4 +51,4 @@ env_specs:
           - anaconda.enterprise.server.contracts
 
           # AE5 [MLFlow]
-          - anaconda.enterprise.mlflow.plugin.backend.project
+          - mlflow-adsp
