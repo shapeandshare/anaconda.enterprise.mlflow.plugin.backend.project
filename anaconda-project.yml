@@ -1,4 +1,4 @@
-name: anaconda.enterprise.mlflow.plugin.backend
+name: anaconda.enterprise.mlflow.plugin.backend.project
 description: MLFlow Backend Plugin For Anaconda Enterprise Projects
 
 commands:
@@ -23,6 +23,11 @@ commands:
     unix: |
       isort .
       black --line-length=120 --target-version=py38 .
+
+  test:unit:
+    env_spec: default
+    unix: |
+      python -m test.unit.setup
 
   build:docs:quickstart:
     env_spec: default
@@ -73,3 +78,6 @@ env_specs:
           - sphinx
           - sphinx-rtd-theme
           - myst-parser
+          - pytest
+          - pytest-cov
+          - python-dotenv

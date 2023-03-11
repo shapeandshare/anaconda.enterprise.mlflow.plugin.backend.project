@@ -15,7 +15,7 @@ setup(
         "anaconda.enterprise.server.common.sdk",
     ],
     entry_points={
-        # Define a MLflow Project Backend plugin called 'ae-project'
+        # Define a MLFlow Project Backend plugin called 'ae-project'
         "mlflow.project_backend": "ae-project=anaconda.enterprise.mlflow.plugin.backend.project:ae_backend_builder",
     },
 )
