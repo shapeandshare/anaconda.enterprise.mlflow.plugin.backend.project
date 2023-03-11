@@ -32,7 +32,7 @@ _inf = np.finfo(np.float64).max
 def run(training_data, max_runs, max_p, epochs, metric, seed):
     print(f"max runs: {max_runs}")
     print(f"max parallel: {max_p}")
-    
+
     train_metric = "train_{}".format(metric)
     val_metric = "val_{}".format(metric)
     test_metric = "test_{}".format(metric)

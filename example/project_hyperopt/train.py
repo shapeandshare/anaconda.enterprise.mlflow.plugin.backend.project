@@ -20,6 +20,7 @@ from tensorflow.keras.callbacks import Callback
 from tensorflow.keras.layers import Dense, Lambda
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import SGD
+
 from anaconda.enterprise.server.common.sdk import load_ae5_user_secrets
 
 
@@ -71,31 +72,39 @@ class MLflowCheckpoint(Callback):
         # mlflow.tensorflow.log_model(self._best_model, "model")
 
         # Explicitly defined conda environment
-        mlflow.tensorflow.log_model(self._best_model, "model", conda_env={
-            "channels": ["https://conda.anaconda.org/conda-forge", "https://conda.anaconda.org/joshburt", "https://conda.anaconda.org/ae5-admin"],
-            "dependencies": [
-                "python=3.8.15",
-                "ipykernel",
-                "anaconda.enterprise.server.common.sdk",
-                "ae5-tools",
-                "anaconda.enterprise.server.contracts",
-                "mlflow=2.0.1",
-                "make",
-                "virtualenv",
-                "pip",
-                "click",
-                "anaconda.enterprise.mlflow.plugin.backend.project",
-                "tensorflow=2.11.0",
-                "numpy",
-                "pandas",
-                "scipy",
-                "scikit-learn",
-                "matplotlib",
-                "hyperopt",
-                "protobuf"
-            ],
-            "name": "mlflow-env"
-        })
+        mlflow.tensorflow.log_model(
+            self._best_model,
+            "model",
+            conda_env={
+                "channels": [
+                    "https://conda.anaconda.org/conda-forge",
+                    "https://conda.anaconda.org/joshburt",
+                    "https://conda.anaconda.org/ae5-admin",
+                ],
+                "dependencies": [
+                    "python=3.8.15",
+                    "ipykernel",
+                    "anaconda.enterprise.server.common.sdk",
+                    "ae5-tools",
+                    "anaconda.enterprise.server.contracts",
+                    "mlflow=2.0.1",
+                    "make",
+                    "virtualenv",
+                    "pip",
+                    "click",
+                    "anaconda.enterprise.mlflow.plugin.backend.project",
+                    "tensorflow=2.11.0",
+                    "numpy",
+                    "pandas",
+                    "scipy",
+                    "scikit-learn",
+                    "matplotlib",
+                    "hyperopt",
+                    "protobuf",
+                ],
+                "name": "mlflow-env",
+            },
+        )
 
     def on_epoch_end(self, epoch, logs=None):
         """
