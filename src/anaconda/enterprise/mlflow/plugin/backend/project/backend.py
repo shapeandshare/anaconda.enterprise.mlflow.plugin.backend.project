@@ -52,7 +52,7 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
         entry_point: str,
         params: Dict,
         version: str,
-        backend_config: Dict,
+        backend_config: Union[Dict, str],
         tracking_uri: str,
         experiment_id: str,
     ):
@@ -71,7 +71,7 @@ class AnacondaEnterpriseProjectBackend(AbstractBackend, BaseModel):
             Parameters (dictionary) for the entry point command.
         version: str
             For Git-based projects, either a commit hash or a branch name.
-        backend_config: Dict
+        backend_config: Union[Dict, str]
             A dictionary, or a path to a JSON file (must end in ‘.json’), which will be passed as config to the backend.
         tracking_uri: str
             The Tracking Server URI.  Within our backend this is controlled through environment variables.
