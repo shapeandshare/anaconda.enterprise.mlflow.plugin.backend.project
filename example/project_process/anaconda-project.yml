@@ -42,6 +42,6 @@ env_specs:
         - pip
         - ae5-tools
         - click
+        - mlflow-adsp
         - anaconda.enterprise.server.common.sdk>=0.3
         - anaconda.enterprise.server.contracts>=0.9.3
-        - anaconda.enterprise.mlflow.plugin.backend>=0.1.2

@@ -1,4 +1,4 @@
-# MLFlow Backend Plugin For Anaconda Enterprise Projects
+# MLFlow Plugin For Anaconda Enterprise
 
 ## Overview
 
