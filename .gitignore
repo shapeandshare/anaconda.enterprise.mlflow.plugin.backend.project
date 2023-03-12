@@ -52,5 +52,4 @@ envs/
 anaconda-project-local.yml
 
 .ipynb_checkpoints
-build/
-docs/source/project
+build/*
