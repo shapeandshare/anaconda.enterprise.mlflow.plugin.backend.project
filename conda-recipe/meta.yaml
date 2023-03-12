@@ -1,8 +1,9 @@
-{% set name = "mlflow-adsp" %}
-{% set version = "0.9.0" %}
+#{% set name = "mlflow-adsp" %}
+{% set version = "0.10.0" %}
 
 package:
-  name: "{{ name|lower }}"
+#  name: "{{ name|lower }}"
+  name: mlflow-adsp
   version: "{{ version }}"
 
 source:
@@ -13,6 +14,8 @@ build:
   noarch: python
   script:
     - {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+  entry_points:
+    - mlflow.project_backend = adsp=mlflow_adsp:ae_backend_builder
 
 requirements:
   host:
@@ -30,3 +33,7 @@ about:
   summary: "MLFlow Plugin For Anaconda Enterprise"
   license: Apache-2.0
   license_file: LICENSE
+
+test:
+  source_files:
+    - test
