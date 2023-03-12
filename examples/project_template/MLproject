@@ -3,7 +3,7 @@ name: ProjectTemplate
 entry_points:
   process_one:
     parameters:
-      training_data: {type: string, default: "data/category/set/training.csv}
+      training_data: {type: string, default: "data/category/set/training.csv"}
       some-parameter-int: {type: int, default: 1}
       some-parameter-float: {type: float, default: 1.0}
       some-parameter-string: {type: string, default: "1"}

@@ -2,7 +2,7 @@ import setuptools
 from setuptools import setup
 
 setup(
-    name="mlflow-adsp",
+    name="mlflow_adsp",
     version="0.8.0",
     description="MLFlow Plugin For Anaconda Enterprise",
     package_dir={"": "src"},
