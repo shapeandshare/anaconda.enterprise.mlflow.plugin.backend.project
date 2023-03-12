@@ -7,7 +7,7 @@ with mlflow.start_run(run_name=f"parameterized-training-{str(uuid.uuid4())}", ne
     # Wrapped and Tracked Workflow Step Runs
     # https://mlflow.org/docs/latest/python_api/mlflow.projects.html#mlflow.projects.run
     #
-    training_data = "data/josh/was/here.csv"
+    training_data = "data/category/set/training.csv"
     experiment_id = run.info.experiment_id
 
     p = mlflow.projects.run(

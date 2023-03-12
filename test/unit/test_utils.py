@@ -3,7 +3,7 @@ import warnings
 
 from ae5_tools.api import AEUserSession
 
-from src.anaconda.enterprise.mlflow.plugin.backend.project.utils import create_session
+from src.utils import create_session
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 

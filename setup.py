@@ -11,11 +11,11 @@ setup(
     install_requires=[
         "mlflow",
         "ae5-tools",
-        "anaconda.enterprise.server.contracts",
+        "anaconda.enterprise.server.contracts>=0.10",
         "anaconda.enterprise.server.common.sdk",
     ],
     entry_points={
         # Define a MLFlow Project Backend plugin called 'adsp'
-        "mlflow.project_backend": "adsp=anaconda.enterprise.mlflow.plugin.backend.project:ae_backend_builder"
+        "mlflow.project_backend": "adsp=mlflow-adsp:ae_backend_builder"
     },
 )

@@ -5,7 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 from ae5_tools.api import AEUserSession
 
-from src.anaconda.enterprise.mlflow.plugin.backend.project import AEMLFlowPluginError, AnacondaEnterpriseSubmittedRun
+from src.contacts.errors.plugin import AEMLFlowPluginError
+from src.submitted_run import AnacondaEnterpriseSubmittedRun
 
 
 @pytest.fixture(scope="function")

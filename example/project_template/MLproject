@@ -9,7 +9,7 @@ entry_points:
       learning_rate: {type: float, default: 1e-1}
       momentum: {type: float, default: .0}
       seed: {type: int, default: 97531}
-    command: "python process_one.py {training_data}
+    command: "python -m steps.process_one {training_data}
                                     --batch-size {batch_size}
                                     --epochs {epochs}
                                     --learning-rate {learning_rate}
@@ -17,4 +17,4 @@ entry_points:
 
 
   main:
-    command: "python start.py"
+    command: "python -m steps.main"
