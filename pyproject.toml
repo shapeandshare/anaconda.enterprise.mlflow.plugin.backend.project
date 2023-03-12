@@ -8,6 +8,6 @@ extend-exclude = '^/envs'
 [tool.isort]
 line_length = 120
 profile = 'black'
-src_paths = ["src","test"]
+src_paths = ["mlflow_adsp","test"]
 known_first_party = ["anaconda"]
 skip = ["envs"]
