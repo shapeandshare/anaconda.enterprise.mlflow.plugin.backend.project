@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="mlflow-adsp",
-    version="0.7.0",
+    version="0.8.0",
     description="MLFlow Plugin For Anaconda Enterprise",
     package_dir={"": "src"},
     packages=setuptools.find_namespace_packages(where="src"),
