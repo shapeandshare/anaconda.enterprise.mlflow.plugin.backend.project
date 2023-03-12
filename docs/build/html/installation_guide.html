@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation Guide &mdash; MLFlow Plugin For Anaconda Enterprise 0.7.0 documentation</title>
+  <title>Installation Guide &mdash; MLFlow Plugin For Anaconda Enterprise 0.9.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -107,14 +107,14 @@ See <code class="docutils literal notranslate"><span class="pre">Variables</span
 <section id="install-plugin">
 <h3>2. Install Plugin<a class="headerlink" href="#install-plugin" title="Permalink to this heading"></a></h3>
 <blockquote>
-<div><p>conda install anaconda.enterprise.mlflow.plugin.backend.project -c https://conda.anaconda.org/joshburt</p>
+<div><p>conda install mlflow-adsp -c https://conda.anaconda.org/joshburt</p>
 </div></blockquote>
 </section>
 <section id="add-the-anaconda-project-worker-command">
 <h3>3. Add the Anaconda Project Worker Command:<a class="headerlink" href="#add-the-anaconda-project-worker-command" title="Permalink to this heading"></a></h3>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Worker: 
     env_spec: default
-    unix: python -m anaconda.enterprise.mlflow.plugin.backend.project.services.worker
+    unix: python -m mlflow-adsp.services.worker
 </pre></div>
 </div>
 </section>

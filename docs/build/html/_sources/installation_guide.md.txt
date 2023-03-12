@@ -17,14 +17,14 @@ See `Variables` below for specific details on each.
 
 ### 2. Install Plugin
 
-> conda install anaconda.enterprise.mlflow.plugin.backend.project -c https://conda.anaconda.org/joshburt
+> conda install mlflow-adsp -c https://conda.anaconda.org/joshburt
 
 ### 3. Add the Anaconda Project Worker Command:
 
 
     Worker: 
         env_spec: default
-        unix: python -m anaconda.enterprise.mlflow.plugin.backend.project.services.worker
+        unix: python -m mlflow-adsp.services.worker
 
 ## Variables
 
