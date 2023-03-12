@@ -3,19 +3,20 @@ from setuptools import setup
 
 setup(
     name="mlflow-adsp",
-    version="0.6.0",
+    version="0.7.0",
     description="MLFlow Plugin For Anaconda Enterprise",
     package_dir={"": "src"},
     packages=setuptools.find_namespace_packages(where="src"),
     author="Joshua C. Burt",
+    python_requires=">=3.8",
     install_requires=[
         "mlflow",
         "ae5-tools",
-        "anaconda.enterprise.server.contracts",
+        "anaconda.enterprise.server.contracts>=0.10",
         "anaconda.enterprise.server.common.sdk",
     ],
     entry_points={
         # Define a MLFlow Project Backend plugin called 'adsp'
-        "mlflow.project_backend": "adsp=anaconda.enterprise.mlflow.plugin.backend.project:ae_backend_builder"
+        "mlflow.project_backend": "adsp=mlflow_adsp:ae_backend_builder"
     },
 )

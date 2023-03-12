@@ -29,23 +29,10 @@ commands:
     unix: |
       python -m test.unit.setup
 
-  build:docs:quickstart:
-    env_spec: default
-    unix: |
-      sphinx-quickstart docs --sep --project anaconda.enterprise.mlflow.plugin.backend.project
-
-  build:apidocs:
-    env_spec: default
-    unix: |
-      rm -rf docs/source/project
-      cp -rf src/anaconda/enterprise/mlflow/plugin/backend/project docs/source/project
-      sphinx-apidoc -f -o docs/source/api docs/source/project
-
   build:docs:
     env_spec: default
     unix: |
-      rm -rf docs/build docs/source/project
-      cp -rf src/anaconda/enterprise/mlflow/plugin/backend/project docs/source/project
+      rm -rf docs/build
       cd docs && make clean && make html
 
 channels:
@@ -67,7 +54,7 @@ env_specs:
 
           - mlflow=2.0.1
           - ae5-tools
-          - anaconda.enterprise.server.contracts>=0.9.3
+          - anaconda.enterprise.server.contracts>=0.10
           - anaconda.enterprise.server.common.sdk
 
           # Project Maintenance and Development

@@ -1,5 +1,5 @@
 {% set name = "mlflow-adsp" %}
-{% set version = "0.6.0" %}
+{% set version = "0.7.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -22,11 +22,11 @@ requirements:
     - python>=3.8
     - mlflow=2.0.1
     - ae5-tools
-    - anaconda.enterprise.server.contracts
+    - anaconda.enterprise.server.contracts>=0.10
     - anaconda.enterprise.server.common.sdk
 
 about:
   home: https://github.com/shapeandshare/mlflow-adsp
   summary: "MLFlow Plugin For Anaconda Enterprise"
-  license: BSD
+  license: Apache-2.0
   license_file: LICENSE

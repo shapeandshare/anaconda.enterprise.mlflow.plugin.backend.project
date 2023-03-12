@@ -5,9 +5,37 @@ commands:
   # Run Time Commands
   #
 
+  # The `Worker` is used to launch background jobs.  Leave as-is under most conditions.
   Worker:
     env_spec: default
-    unix: python -m anaconda.enterprise.mlflow.plugin.backend.services.worker
+    unix: python -m mlflow-adsp.services.worker
+
+  #
+  # Development Time Commands
+  #
+
+  clean:
+    env_spec: development
+    unix: |
+      rm -rf .coverage htmlcov coverage.xml build .pytest_cache test/unit/.pytest_cache
+
+  lint:
+    env_spec: development
+    unix: |
+      pylint src
+      isort --check --diff .
+      black --line-length=120 --target-version=py38 --check --diff .
+
+  lint:fix:
+    env_spec: development
+    unix: |
+      isort .
+      black --line-length=120 --target-version=py38 .
+
+  test:unit:
+    env_spec: development
+    unix: |
+      python -m test.unit.setup
 
 variables:
   MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING: "TRUE"
@@ -29,26 +57,58 @@ channels:
 
 platforms:
   - linux-64
+  - osx-64
+  - osx-arm64
+  - win-64
 
 env_specs:
-    default:
-        description: Default Environment
-        packages:
-          # Language Level
-          - python>=3.8
+  default:
+    description: Development Environment
+    packages:
+      # Language Level
+      - python=3.8
 
-          # MLFlow
-          - mlflow=2.0.1
-          - make
-          - virtualenv
-          - pip
-          - click
+      # MLFlow
+      - mlflow=2.0.1
+      - make
+      - virtualenv
+      - pip
+      - click
 
-          # AE5
-          - ipykernel
-          - ae5-tools
-          - anaconda.enterprise.server.common.sdk
-          - anaconda.enterprise.server.contracts
+      # AE5
+      - ipykernel
+      - ae5-tools
+      - anaconda.enterprise.server.common.sdk
 
-          # AE5 [MLFlow]
-          - mlflow-adsp
+      # AE5 [MLFlow]
+      - mlflow-adsp
+
+  development:
+    description: Development Environment
+    packages:
+      # Language Level
+      - python=3.8
+
+      # MLFlow
+      - mlflow=2.0.1
+      - make
+      - virtualenv
+      - pip
+      - click
+
+      # AE5
+      - ipykernel
+      - ae5-tools
+      - anaconda.enterprise.server.common.sdk
+
+      # AE5 [MLFlow]
+      - mlflow-adsp
+
+      # Project Maintenance and Development
+      - isort
+      - pylint
+      - black
+      - jupyter-black
+      - pytest
+      - pytest-cov
+      - python-dotenv
