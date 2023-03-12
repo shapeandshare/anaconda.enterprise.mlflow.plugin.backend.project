@@ -8,7 +8,7 @@ commands:
   # The `Worker` is used to launch background jobs.  Leave as-is under most conditions.
   Worker:
     env_spec: default
-    unix: python -m anaconda.enterprise.mlflow.plugin.backend.services.worker
+    unix: python -m mlflow-adsp.services.worker
 
   #
   # Development Time Commands

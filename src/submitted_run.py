@@ -8,7 +8,7 @@ from ae5_tools.api import AEUserSession
 from mlflow.entities import RunStatus
 from mlflow.projects.submitted_run import SubmittedRun
 
-from anaconda.enterprise.server.contracts import BaseModel, AEProjectJobRunStateType
+from anaconda.enterprise.server.contracts import AEProjectJobRunStateType, BaseModel
 
 from .contacts.errors.plugin import AEMLFlowPluginError
 
