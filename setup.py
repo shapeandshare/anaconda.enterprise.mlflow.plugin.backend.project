@@ -2,7 +2,7 @@ import setuptools
 from setuptools import setup
 
 setup(
-    name="mlflow_adsp",
+    name="mlflow-adsp",
     version="0.9.0",
     description="MLFlow Plugin For Anaconda Enterprise",
     package_dir={"": "src"},
@@ -17,6 +17,6 @@ setup(
     ],
     entry_points={
         # Define a MLFlow Project Backend plugin called 'adsp'
-        "mlflow.project_backend": "adsp=mlflow_adsp:ae_backend_builder"
+        "mlflow.project_backend": "adsp=mlflow-adsp:ae_backend_builder"
     },
 )
