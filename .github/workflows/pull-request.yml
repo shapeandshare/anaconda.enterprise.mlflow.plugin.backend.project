@@ -43,7 +43,8 @@ jobs:
         conda info
     - name: Build Conda Package
       run: |
-        conda build conda-recipe
+        mkdir build
+        conda build conda-recipe --output-folder build
     - name: Anaconda Project Setup
       run: |
         anaconda-project prepare --env-spec default
