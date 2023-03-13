@@ -1,6 +1,6 @@
 import setuptools
-from setuptools import setup
 import versioneer
+from setuptools import setup
 
 setup(
     name="mlflow-adsp",

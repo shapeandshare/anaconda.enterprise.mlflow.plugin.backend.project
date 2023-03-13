@@ -47,4 +47,5 @@ jobs:
       env:
         ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
       run: |
-        anaconda --verbose --token $ANACONDA_TOKEN upload --user joshburt build/noarch/mlflow-adsp-*.tar.bz2 --force
+        git tag describe --exact-match --tags HEAD || export LABEL="--label dev"
+        anaconda --verbose --token $ANACONDA_TOKEN upload --user joshburt $LABEL build/noarch/mlflow-adsp-*.tar.bz2 --force
