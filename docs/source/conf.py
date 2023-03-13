@@ -4,8 +4,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
-from os.path import join, pardir, dirname
 import sys
+from os.path import dirname, join, pardir
 
 sys.path.insert(0, join(dirname(__file__), pardir))
 import versioneer
