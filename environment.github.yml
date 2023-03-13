@@ -9,4 +9,3 @@ dependencies:
   - conda-verify
   - setuptools
   - anaconda-client
-  - versioneer

@@ -19,6 +19,7 @@ requirements:
   host:
     - python>=3.8
     - setuptools
+    - versioneer
   run:
     - python>=3.8
     - mlflow=2.0.1
