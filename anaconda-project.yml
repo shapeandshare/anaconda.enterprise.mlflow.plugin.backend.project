@@ -68,5 +68,6 @@ env_specs:
     - pytest
     - pytest-cov
     - python-dotenv
+    - versioneer
 
 

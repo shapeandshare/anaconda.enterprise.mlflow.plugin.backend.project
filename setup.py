@@ -1,9 +1,11 @@
 import setuptools
+import versioneer
 from setuptools import setup
 
 setup(
     name="mlflow-adsp",
-    version="0.10.0",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     description="MLFlow Plugin For Anaconda Enterprise",
     packages=setuptools.find_packages(),
     author="Joshua C. Burt",
